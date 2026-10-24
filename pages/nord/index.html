@@ -32,7 +32,7 @@ body{
     background:#4fc3ff;
     border:3px solid white;
     cursor:pointer;
-    box-shadow:0 0 20px #4fc3ff;
+    box-shadow:0 0 15px #4fc3ff;
     transition:0.3s;
 }
 
@@ -41,7 +41,6 @@ body{
 }
 
 .tooltip{
-    display:none;
     position:absolute;
     bottom:55px;
     left:50%;
@@ -51,6 +50,7 @@ body{
     padding:8px 12px;
     border-radius:8px;
     white-space:nowrap;
+    display:none;
 }
 
 .marker:hover .tooltip{
@@ -59,12 +59,12 @@ body{
 
 .panel{
     position:fixed;
-    right:0;
     top:0;
-    width:400px;
+    right:0;
+    width:420px;
     height:100vh;
     overflow:auto;
-    background:rgba(10,15,30,.97);
+    background:rgba(10,15,25,.97);
     color:white;
     padding:25px;
     box-sizing:border-box;
@@ -75,16 +75,21 @@ body{
     position:fixed;
     top:20px;
     left:20px;
-    padding:10px 20px;
     background:white;
     color:black;
     text-decoration:none;
+    padding:10px 20px;
     border-radius:10px;
+    font-weight:bold;
     z-index:1000;
 }
 
 h2{
     color:#8fdcff;
+}
+
+ul{
+    padding-left:20px;
 }
 
 </style>
@@ -101,7 +106,7 @@ h2{
 
 <!-- Forteresse -->
 <div class="marker"
-style="top:16%;left:54%;"
+style="top:15%;left:52%;"
 onclick="showRegion('forteresse')">
 
 <div class="tooltip">
@@ -112,7 +117,7 @@ onclick="showRegion('forteresse')">
 
 <!-- Port -->
 <div class="marker"
-style="top:25%;left:12%;"
+style="top:25%;left:14%;"
 onclick="showRegion('port')">
 
 <div class="tooltip">
@@ -123,7 +128,7 @@ onclick="showRegion('port')">
 
 <!-- Grotte -->
 <div class="marker"
-style="top:50%;left:8%;"
+style="top:48%;left:6%;"
 onclick="showRegion('grotte')">
 
 <div class="tooltip">
@@ -134,7 +139,7 @@ onclick="showRegion('grotte')">
 
 <!-- Loups -->
 <div class="marker"
-style="top:74%;left:92%;"
+style="top:73%;left:88%;"
 onclick="showRegion('loups')">
 
 <div class="tooltip">
@@ -145,7 +150,7 @@ onclick="showRegion('loups')">
 
 <!-- Bois -->
 <div class="marker"
-style="top:52%;left:45%;"
+style="top:55%;left:45%;"
 onclick="showRegion('bois')">
 
 <div class="tooltip">
@@ -156,7 +161,7 @@ onclick="showRegion('bois')">
 
 <!-- Ponts -->
 <div class="marker"
-style="top:60%;left:58%;"
+style="top:60%;left:60%;"
 onclick="showRegion('ponts')">
 
 <div class="tooltip">
@@ -167,7 +172,7 @@ onclick="showRegion('ponts')">
 
 <!-- Montagnes -->
 <div class="marker"
-style="top:8%;left:75%;"
+style="top:6%;left:78%;"
 onclick="showRegion('montagnes')">
 
 <div class="tooltip">
@@ -178,32 +183,49 @@ onclick="showRegion('montagnes')">
 
 </div>
 
-<div class="panel" id="panel">
+<div id="panel" class="panel">
 
 <h2>❄️ Nord Glacial</h2>
 
 <p>
-Le Nord Glacial est dirigé par LokiWOO, Trickster des Armées du Nord.
-Cliquez sur un lieu de la carte pour découvrir son histoire.
+Bienvenue dans les terres de LokiWOO.
+Le Nord Glacial protège les frontières du Royaume Rose.
 </p>
+
+<p>
+Survolez un marqueur pour voir son nom.
+Cliquez dessus pour découvrir son histoire.
+</p>
+
+<hr>
+
+<ul>
+<li>🎭 Forteresse du Trickster</li>
+<li>⚓ Port des Glaces Roses</li>
+<li>💎 Grotte des Cristaux Bleus</li>
+<li>🐺 Falaises des Loups Anciens</li>
+<li>🌲 Bois Gelés</li>
+<li>🌉 Ponts du Givre Éternel</li>
+<li>🏔️ Monts de la Couronne du Nord</li>
+</ul>
 
 </div>
 
 <script>
 
-const lore = {
+const regions = {
 
 forteresse: `
 <h2>🎭 Forteresse du Trickster</h2>
 
 <p>
-Capitale du Nord Glacial et demeure de LokiWOO.
-Cette forteresse domine l'ensemble des territoires nordiques.
+Capitale du Nord Glacial et siège de LokiWOO.
+Cette citadelle domine les Monts de Givre et surveille toutes les frontières du Nord.
 </p>
 
 <ul>
-<li>⚔️ Quartier Général</li>
-<li>🛡️ Casernes du Nord</li>
+<li>⚔️ Quartier Général des Armées du Nord</li>
+<li>🛡️ Casernes Nordiques</li>
 <li>📜 Salle des Stratagèmes</li>
 <li>🦅 Tour des Corbeaux</li>
 </ul>
@@ -214,14 +236,14 @@ port: `
 
 <p>
 Principal port du Nord.
-Il assure le commerce avec le Royaume Rose malgré les mers gelées.
+Les navires y affrontent les mers gelées pour relier le Royaume Rose.
 </p>
 
 <ul>
 <li>🚢 Flotte Nordique</li>
 <li>⚓ Chantier Naval</li>
-<li>🐟 Marché Maritime</li>
 <li>🧊 Phare Gelé</li>
+<li>🐟 Marché Maritime</li>
 </ul>
 `,
 
@@ -229,13 +251,13 @@ grotte: `
 <h2>💎 Grotte des Cristaux Bleus</h2>
 
 <p>
-Sanctuaire oublié enfoui dans la glace.
-Les cristaux illuminent les cavernes d'une lueur bleue mystérieuse.
+Immense sanctuaire enfoui dans la glace.
+Ses cristaux illuminent les profondeurs d'une mystérieuse lumière bleue.
 </p>
 
 <ul>
 <li>💎 Cristaux rares</li>
-<li>🔮 Relique ancienne</li>
+<li>🔮 Anciennes reliques</li>
 <li>⛏️ Mines de glace pure</li>
 </ul>
 `,
@@ -245,13 +267,13 @@ loups: `
 
 <p>
 Terres sacrées du Nord.
-Les loups géants sont considérés comme les gardiens spirituels de LokiWOO.
+Les loups géants sont considérés comme les gardiens du royaume.
 </p>
 
 <ul>
 <li>🐺 Sanctuaire des Loups</li>
 <li>🌙 Falaises sacrées</li>
-<li>👣 Chemins de pèlerinage</li>
+<li>👣 Chemin du pèlerinage</li>
 </ul>
 `,
 
@@ -259,12 +281,13 @@ bois: `
 <h2>🌲 Bois Gelés</h2>
 
 <p>
-Immense forêt enneigée traversant le cœur du Nord.
+Forêt enneigée couvrant le cœur du Nord.
+Les chasseurs et éclaireurs y trouvent refuge.
 </p>
 
 <ul>
-<li>🦌 Faune sauvage</li>
-<li>🏹 Chasseurs du Nord</li>
+<li>🦌 Faune nordique</li>
+<li>🏹 Camps de chasse</li>
 <li>🌿 Herbes rares</li>
 </ul>
 `,
@@ -273,7 +296,7 @@ ponts: `
 <h2>🌉 Ponts du Givre Éternel</h2>
 
 <p>
-Réseau de ponts stratégiques reliant toutes les régions du Nord.
+Ces ponts permettent d'unir les territoires du Nord malgré les falaises et les glaciers.
 </p>
 
 <ul>
@@ -287,8 +310,8 @@ montagnes: `
 <h2>🏔️ Monts de la Couronne du Nord</h2>
 
 <p>
-Frontière naturelle du Nord Glacial.
-Les tempêtes qui y naissent peuvent durer plusieurs jours.
+Immense muraille naturelle protégeant le Nord Glacial.
+Les tempêtes y naissent avant de balayer tout le royaume.
 </p>
 
 <ul>
@@ -301,7 +324,8 @@ Les tempêtes qui y naissent peuvent durer plusieurs jours.
 };
 
 function showRegion(region){
-    document.getElementById("panel").innerHTML=lore[region];
+    document.getElementById('panel').innerHTML =
+    regions[region];
 }
 
 </script>
