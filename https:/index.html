@@ -3,121 +3,233 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Royaume Rose</title>
+<title>🌹 Royaume Rose</title>
 
 <style>
+
 body{
-    background:#f7d9e8;
-    font-family:Georgia, serif;
     margin:0;
+    background:#111;
+    font-family:Georgia, serif;
 }
 
-h1{
-    text-align:center;
-    color:#8a2f6b;
-}
-
-#map{
-    width:900px;
-    height:600px;
-    margin:20px auto;
+.map-container{
     position:relative;
-    background:#fff0f7;
-    border:4px solid gold;
-    border-radius:20px;
-}
-
-.place{
-    position:absolute;
-    background:white;
-    border:2px solid #d96cb2;
-    border-radius:10px;
-    padding:10px;
-    cursor:pointer;
-}
-
-#info{
-    width:900px;
+    max-width:1600px;
     margin:auto;
-    background:white;
+}
+
+.map{
+    width:100%;
+    display:block;
+}
+
+.marker{
+    position:absolute;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:3px solid white;
+    background:gold;
+    cursor:pointer;
+    box-shadow:0 0 20px gold;
+    transition:0.3s;
+}
+
+.marker:hover{
+    transform:scale(1.4);
+}
+
+.popup{
+    position:fixed;
+    top:20px;
+    right:20px;
+    width:350px;
+    max-height:80vh;
+    overflow:auto;
+    background:rgba(20,20,20,0.95);
+    color:white;
     padding:20px;
     border-radius:15px;
+    border:2px solid gold;
+    display:none;
+    z-index:999;
 }
+
+.close{
+    float:right;
+    cursor:pointer;
+    color:gold;
+    font-size:20px;
+}
+
+h2{
+    color:#ffb6e1;
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>🌹 Royaume Rose 🌹</h1>
+<div class="map-container">
 
-<div id="map">
+<img src="images/carte-royaume.jpg" class="map">
 
-<div class="place" style="top:40px;left:390px;"
-onclick="showInfo('sanka')">
-👑 Sanka
+<!-- LOKIWOO -->
+<div class="marker"
+style="top:12%;left:50%;"
+onclick="showLore('loki')"></div>
+
+<!-- SANKA -->
+<div class="marker"
+style="top:31%;left:50%;"
+onclick="showLore('sanka')"></div>
+
+<!-- FORET -->
+<div class="marker"
+style="top:34%;left:22%;"
+onclick="showLore('foret')"></div>
+
+<!-- PSYKO -->
+<div class="marker"
+style="top:35%;left:82%;"
+onclick="showLore('psyko')"></div>
+
+<!-- VILLAGE -->
+<div class="marker"
+style="top:57%;left:45%;"
+onclick="showLore('village')"></div>
+
+<!-- TROUBADOUR -->
+<div class="marker"
+style="top:64%;left:82%;"
+onclick="showLore('blackhawks')"></div>
+
+<!-- ENZO -->
+<div class="marker"
+style="top:82%;left:50%;"
+onclick="showLore('enzo')"></div>
+
 </div>
 
-<div class="place" style="top:180px;left:80px;"
-onclick="showInfo('loki')">
-🎭 LokiWOO
-</div>
-
-<div class="place" style="top:180px;left:380px;"
-onclick="showInfo('psyko')">
-♟️ Psyk0Star
-</div>
-
-<div class="place" style="top:180px;left:650px;"
-onclick="showInfo('blackhawks')">
-🎶 SK_BLACKHAWKS
-</div>
-
-<div class="place" style="top:450px;left:350px;"
-onclick="showInfo('enzo')">
-🤝 Enzo50505050
-</div>
-
-</div>
-
-<div id="info">
-Clique sur une région du royaume.
-</div>
+<div id="popup" class="popup"></div>
 
 <script>
 
-function showInfo(personnage){
+function showLore(place){
 
-const infos = {
+let lore={
 
-sanka: `
+sanka:`
+<span class="close" onclick="closeLore()">✖</span>
+
 <h2>👑 Sanka</h2>
-<p>Reine du Royaume Rose.</p>
+
+<h3>Reine du Royaume Rose</h3>
+
+<p>
+Depuis le Château Rose Royal,
+Sanka veille sur les terres du royaume.
+Sous sa protection prospèrent
+le Nord, le Sud et les villages.
+</p>
 `,
 
-loki: `
+loki:`
+<span class="close" onclick="closeLore()">✖</span>
+
 <h2>🎭 LokiWOO</h2>
-<p>Trickster des Armées du Nord.</p>
+
+<h3>Trickster des Armées du Nord</h3>
+
+<p>
+Gardien des forteresses glacées.
+Maître de la ruse.
+Protecteur de la frontière septentrionale.
+</p>
 `,
 
-psyko: `
+psyko:`
+<span class="close" onclick="closeLore()">✖</span>
+
 <h2>♟️ Psyk0Star</h2>
-<p>Grand Stratège Royal.</p>
+
+<h3>Grand Stratège Royal</h3>
+
+<p>
+Gardien des archives.
+Conseiller militaire du Royaume Rose.
+Maître des cartes et des plans.
+</p>
 `,
 
-blackhawks: `
+blackhawks:`
+<span class="close" onclick="closeLore()">✖</span>
+
 <h2>🎶 SK_BLACKHAWKS</h2>
-<p>Troubadour Royal.</p>
+
+<h3>Troubadour Royal</h3>
+
+<p>
+Chroniqueur officiel.
+Gardien des légendes.
+Conteur des exploits du royaume.
+</p>
 `,
 
-enzo: `
+enzo:`
+<span class="close" onclick="closeLore()">✖</span>
+
 <h2>🤝 Enzo50505050</h2>
-<p>Seigneur des Terres du Sud.</p>
+
+<h3>Seigneur des Terres du Sud</h3>
+
+<p>
+Allié du Royaume Rose.
+Co-signataire du Traité de l'Alliance avec LokiWOO.
+Gardien des routes commerciales.
+</p>
+`,
+
+foret:`
+<span class="close" onclick="closeLore()">✖</span>
+
+<h2>🌹 Forêt des Roses Noires</h2>
+
+<p>
+Lieu ancien et mystérieux.
+Les roses poussent dans l'obscurité
+et les légendes racontent que les esprits du royaume
+y résident encore.
+</p>
+`,
+
+village:`
+<span class="close" onclick="closeLore()">✖</span>
+
+<h2>🏘️ Village Royal</h2>
+
+<ul>
+<li>🔨 Forgeron</li>
+<li>🐴 Palefrenier</li>
+<li>🐑 Berger</li>
+<li>🌾 Paysan</li>
+<li>🍲 Cuisinier</li>
+<li>⚔️ Chevalier Rose</li>
+<li>⚖️ Bailli</li>
+</ul>
 `
 
 };
 
-document.getElementById("info").innerHTML = infos[personnage];
+document.getElementById("popup").style.display="block";
+document.getElementById("popup").innerHTML=lore[place];
 
+}
+
+function closeLore(){
+document.getElementById("popup").style.display="none";
 }
 
 </script>
