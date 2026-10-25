@@ -6,40 +6,236 @@
 <title>❄️ Nord Glacial</title>
 
 <style>
+
 body{
     margin:0;
-    background:#111;
-    color:white;
-    text-align:center;
+    background:#09111f;
     font-family:Georgia, serif;
+    color:white;
 }
 
-img{
-    width:100%;
-    max-width:1400px;
-    display:block;
+.map-container{
+    position:relative;
+    max-width:1600px;
     margin:auto;
+}
+
+.map{
+    width:100%;
+    display:block;
+}
+
+.marker{
+    position:absolute;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    background:#00cfff;
+    border:2px solid white;
+    box-shadow:0 0 15px #00cfff;
+    cursor:pointer;
+}
+
+.marker:hover{
+    transform:scale(1.2);
+}
+
+.tooltip{
+    position:absolute;
+    bottom:40px;
+    left:50%;
+    transform:translateX(-50%);
+    background:black;
+    padding:5px 10px;
+    border-radius:6px;
+    white-space:nowrap;
+    display:none;
+}
+
+.marker:hover .tooltip{
+    display:block;
+}
+
+.description{
+    max-width:1200px;
+    margin:auto;
+    padding:30px;
+    text-align:center;
+    background:#111;
+}
+
+h1{
+    color:#7ddfff;
+}
+
+button{
+    background:#00cfff;
+    border:none;
+    padding:10px 18px;
+    cursor:pointer;
+    border-radius:8px;
+    margin-top:15px;
 }
 
 a{
     color:gold;
-    font-size:22px;
     text-decoration:none;
 }
-</style>
 
+</style>
 </head>
+
 <body>
 
-<h1>❄️ Nord Glacial</h1>
+<h1 style="text-align:center;">❄️ Nord Glacial</h1>
 
-<img src="nord-glacial.png" alt="Nord Glacial">
+<div class="map-container">
 
-<p>Bienvenue dans le Nord Glacial.</p>
+<img src="nord-glacial.png" class="map">
+
+<!-- Palais central -->
+<div class="marker"
+style="top:26%;left:50%;"
+onclick="showPlace('palais')">
+
+<div class="tooltip">🏰 Palais de Givre</div>
+
+</div>
+
+<!-- Forteresse -->
+<div class="marker"
+style="top:35%;left:10%;"
+onclick="showPlace('forteresse')">
+
+<div class="tooltip">🏯 Forteresse du Levant</div>
+
+</div>
+
+<!-- Grotte -->
+<div class="marker"
+style="top:42%;left:86%;"
+onclick="showPlace('grotte')">
+
+<div class="tooltip">🕳️ Grotte Bleue</div>
+
+</div>
+
+<!-- Village -->
+<div class="marker"
+style="top:72%;left:54%;"
+onclick="showPlace('village')">
+
+<div class="tooltip">🏘️ Village d'Hivernel</div>
+
+</div>
+
+<!-- Pont -->
+<div class="marker"
+style="top:66%;left:78%;"
+onclick="showPlace('pont')">
+
+<div class="tooltip">🌉 Pont des Cascades</div>
+
+</div>
+
+<!-- Forêt -->
+<div class="marker"
+style="top:58%;left:22%;"
+onclick="showPlace('foret')">
+
+<div class="tooltip">🐺 Forêt des Loups Blancs</div>
+
+</div>
+
+</div>
+
+<div id="description" class="description">
+
+<h2>Bienvenue dans le Nord Glacial</h2>
 
 <p>
-<a href="../">⬅ Retour à la carte</a>
+Cliquez sur un lieu de la carte pour découvrir son histoire.
 </p>
+
+<p>
+<a href="../">⬅ Retour au Royaume Rose</a>
+</p>
+
+</div>
+
+<script>
+
+function showPlace(place){
+
+const box = document.getElementById("description");
+
+if(place==="palais"){
+box.innerHTML=`
+<h2>🏰 Palais de Givre</h2>
+<p>
+Capitale du Nord Glacial. Ses tours de glace dominent les montagnes éternelles.
+Les souverains du froid y résident depuis des siècles.
+</p>
+<p><a href="../">⬅ Retour au Royaume Rose</a></p>
+`;
+}
+
+if(place==="forteresse"){
+box.innerHTML=`
+<h2>🏯 Forteresse du Levant</h2>
+<p>
+Ancienne place militaire protégeant les frontières occidentales.
+Ses remparts résistent aux tempêtes les plus terribles.
+</p>
+<p><a href="../">⬅ Retour au Royaume Rose</a></p>
+`;
+}
+
+if(place==="grotte"){
+box.innerHTML=`
+<h2>🕳️ Grotte Bleue</h2>
+<p>
+Une vaste caverne illuminée par des cristaux magiques.
+Les explorateurs racontent que des créatures anciennes y demeurent.
+</p>
+<p><a href="../">⬅ Retour au Royaume Rose</a></p>
+`;
+}
+
+if(place==="village"){
+box.innerHTML=`
+<h2>🏘️ Village d'Hivernel</h2>
+<p>
+Le plus grand village du nord.
+Les marchands y échangent fourrures, poissons et cristaux.
+</p>
+<p><a href="../">⬅ Retour au Royaume Rose</a></p>
+`;
+}
+
+if(place==="pont"){
+box.innerHTML=`
+<h2>🌉 Pont des Cascades Gelées</h2>
+<p>
+Un immense pont de pierre enjambant les chutes gelées du royaume.
+</p>
+<p><a href="../">⬅ Retour au Royaume Rose</a></p>
+`;
+}
+
+if(place==="foret"){
+box.innerHTML=`
+<h2>🐺 Forêt des Loups Blancs</h2>
+<p>
+Une forêt enneigée où vivent les célèbres loups blancs du Nord Glacial.
+</p>
+<p><a href="../">⬅ Retour au Royaume Rose</a></p>
+`;
+}
+
+}
+
+</script>
 
 </body>
 </html>
