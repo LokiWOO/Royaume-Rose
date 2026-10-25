@@ -1,1 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌑 Forêt des Roses Noires</title>
 
+<style>
+
+body{
+    margin:0;
+    background:#0d0913;
+    font-family:Georgia, serif;
+    overflow-x:hidden;
+}
+
+.map-container{
+    position:relative;
+    max-width:1600px;
+    margin:auto;
+}
+
+.map{
+    width:100%;
+    display:block;
+}
+
+.marker{
+    position:absolute;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:#b36dff;
+    border:3px solid white;
+    box-shadow:0 0 20px #b36dff;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.marker:hover{
+    transform:scale(1.2);
+}
+
+.tooltip{
+    position:absolute;
+    bottom:45px;
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(0,0,0,.9);
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+    white-space:nowrap;
+    display:none;
+}
+
+.marker:hover .tooltip{
+    display:block;
+}
+
+.back{
+    position:fixed;
+    top:20px;
+    left:20px;
+    background:#111;
+    color:gold;
+    padding:12px 20px;
+    border-radius:10px;
+    text-decoration:none;
+    z-index:1100;
+}
+
+#overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    opacity:0;
+    visibility:hidden;
+    transition:.3s;
+    z-index:900;
+}
+
+#overlay.open{
+    opacity:1;
+    visibility:visible;
+}
+
+#panel{
+    position:fixed;
+    top:0;
+    right:-460px;
+    width:420px;
+    height:100vh;
+
+    background:rgba(18,10,30,.94);
+
+    backdrop-filter:blur(18px);
+
+    border-left:2px solid rgba(179,109,255,.4);
+
+    box-shadow:
+    -20px 0 60px rgba(0,0,0,.7),
+    inset 0 0 25px rgba(179,109,255,.15);
+
+    transition:.4s ease;
+
+    z-index:1000;
+
+    overflow-y:auto;
+
+    color:white;
+    padding:30px;
+    box-sizing:border-box;
+}
+
+#panel.open{
+    right:0;
+}
+
+.panel-title{
+    color:#d3a3ff;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    font-size:12px;
+}
+
+#panel h2{
+    color:#e1baff;
+    margin-top:15px;
+}
+
+#panel p{
+    line-height:1.8;
+}
+
+.close-btn{
+    position:absolute;
+    top:15px;
+    right:15px;
+
+    width:42px;
+    height:42px;
+
+    border:none;
+    border-radius:50%;
+
+    background:rgba(255,255,255,.15);
+
+    color:white;
+    cursor:pointer;
+    font-size:20px;
+}
+
+.close-btn:hover{
+    background:#d3a3ff;
+    color:black;
+}
+
+</style>
+</head>
+<body>
+
+<a class="back" href="../">⬅ Retour au Royaume Rose</a>
+
+<div class="map-container" onclick="closePanel()">
+
+<img src="foret-noire.png" class="map" alt="Forêt Noire">
+
+<!-- Cité -->
+<div class="marker"
+style="top:24%;left:33%;"
+onclick="event.stopPropagation();showPlace('cite')">
+<div class="tooltip">🏰 Cité Obsidienne</div>
+</div>
+
+<!-- Arbre -->
+<div class="marker"
+style="top:14%;left:58%;"
+onclick="event.stopPropagation();showPlace('arbre')">
+<div class="tooltip">🌳 Arbre-Monde Pourpre</div>
+</div>
+
+<!-- Sanctuaire -->
+<div class="marker"
+style="top:31%;left:66%;"
+onclick="event.stopPropagation();showPlace('sanctuaire')">
+<div class="tooltip">💜 Sanctuaire des Ombres</div>
+</div>
+
+<!-- Fontaine -->
+<div class="marker"
+style="top:49%;left:54%;"
+onclick="event.stopPropagation();showPlace('fontaine')">
+<div class="tooltip">⛲ Fontaine des Âmes</div>
+</div>
+
+<!-- Port -->
+<div class="marker"
+style="top:82%;left:86%;"
+onclick="event.stopPropagation();showPlace('port')">
+<div class="tooltip">🌊 Port de la Brume</div>
+</div>
+
+<!-- Cascades -->
+<div class="marker"
+style="top:70%;left:11%;"
+onclick="event.stopPropagation();showPlace('cascade')">
+<div class="tooltip">🏞️ Cascades Nocturnes</div>
+</div>
+
+</div>
+
+<div id="overlay" onclick="closePanel()"></div>
+
+<div id="panel">
+
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div class="panel-title">
+Forêt Noire
+</div>
+
+<h2>🌑 Forêt des Roses Noires</h2>
+
+<p>
+Cliquez sur un lieu pour découvrir les mystères de cette région.
+</p>
+
+</div>
+
+<script>
+
+function showPlace(place){
+
+const panel = document.getElementById("panel");
+const overlay = document.getElementById("overlay");
+
+panel.classList.add("open");
+overlay.classList.add("open");
+
+let content = "";
+
+if(place==="cite"){
+content=`
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div class="panel-title">Capitale Forestière</div>
+
+<h2>🏰 Cité Obsidienne</h2>
+
+<p>
+Immense métropole de pierre sombre illuminée par des cristaux violets.
+La noblesse de la Forêt Noire y réside depuis des siècles.
+</p>
+`;
+}
+
+if(place==="arbre"){
+content=`
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div class="panel-title">Relique Vivante</div>
+
+<h2>🌳 Arbre-Monde Pourpre</h2>
+
+<p>
+L'arbre le plus ancien du royaume.
+Ses racines parcourent toute la forêt et alimentent la magie naturelle des lieux.
+</p>
+`;
+}
+
+if(place==="sanctuaire"){
+content=`
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div class="panel-title">Temple Sacré</div>
+
+<h2>💜 Sanctuaire des Ombres</h2>
+
+<p>
+Lieu de méditation et de recueillement.
+Les prêtres y étudient les anciennes forces de la forêt.
+</p>
+`;
+}
+
+if(place==="fontaine"){
+content=`
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div class="panel-title">Centre Spirituel</div>
+
+<h2>⛲ Fontaine des Âmes</h2>
+
+<p>
+Cette fontaine projette une lumière violette visible à des kilomètres.
+Elle est considérée comme le cœur magique de la région.
+</p>
+`;
+}
+
+if(place==="port"){
+content=`
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div class="panel-title">Port Commercial</div>
+
+<h2>🌊 Port de la Brume</h2>
+
+<p>
+Principal accès maritime de la Forêt Noire.
+Les navires y transportent bois rares, fleurs mystiques et cristaux.
+</p>
+`;
+}
+
+if(place==="cascade"){
+content=`
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div class="panel-title">Merveille Naturelle</div>
+
+<h2>🏞️ Cascades Nocturnes</h2>
+
+<p>
+De grandes chutes d'eau bordent les falaises occidentales.
+La lumière des fleurs violettes s'y reflète chaque nuit.
+</p>
+`;
+}
+
+panel.innerHTML = content;
+
+}
+
+function closePanel(){
+
+document.getElementById("panel").classList.remove("open");
+document.getElementById("overlay").classList.remove("open");
+
+}
+
+</script>
+
+</body>
+</html>
