@@ -9,9 +9,9 @@
 
 body{
     margin:0;
-    background:#09111f;
+    background:#08111f;
     font-family:Georgia, serif;
-    color:white;
+    overflow-x:hidden;
 }
 
 .map-container{
@@ -27,13 +27,14 @@ body{
 
 .marker{
     position:absolute;
-    width:32px;
-    height:32px;
+    width:35px;
+    height:35px;
     border-radius:50%;
-    background:#00cfff;
-    border:2px solid white;
-    box-shadow:0 0 15px #00cfff;
+    background:#00d9ff;
+    border:3px solid white;
+    box-shadow:0 0 20px #00d9ff;
     cursor:pointer;
+    transition:0.3s;
 }
 
 .marker:hover{
@@ -42,12 +43,13 @@ body{
 
 .tooltip{
     position:absolute;
-    bottom:40px;
+    bottom:45px;
     left:50%;
     transform:translateX(-50%);
-    background:black;
-    padding:5px 10px;
-    border-radius:6px;
+    background:rgba(0,0,0,0.9);
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
     white-space:nowrap;
     display:none;
 }
@@ -56,30 +58,55 @@ body{
     display:block;
 }
 
-.description{
-    max-width:1200px;
-    margin:auto;
-    padding:30px;
-    text-align:center;
-    background:#111;
+#panel{
+    position:fixed;
+    top:0;
+    right:-420px;
+    width:380px;
+    height:100%;
+    background:rgba(10,20,40,0.98);
+    color:white;
+    padding:25px;
+    box-sizing:border-box;
+    transition:0.4s;
+    overflow-y:auto;
+    border-left:3px solid #00d9ff;
+    z-index:1000;
 }
 
-h1{
-    color:#7ddfff;
+#panel.open{
+    right:0;
 }
 
-button{
-    background:#00cfff;
+#panel h2{
+    color:#7de8ff;
+}
+
+.close-btn{
+    background:#00d9ff;
+    color:black;
     border:none;
-    padding:10px 18px;
+    padding:10px;
     cursor:pointer;
+    margin-bottom:20px;
+    font-weight:bold;
     border-radius:8px;
-    margin-top:15px;
 }
 
-a{
+.back{
+    position:fixed;
+    top:20px;
+    left:20px;
+    background:#111;
     color:gold;
     text-decoration:none;
+    padding:12px 20px;
+    border-radius:10px;
+    z-index:999;
+}
+
+.back:hover{
+    background:#222;
 }
 
 </style>
@@ -87,78 +114,66 @@ a{
 
 <body>
 
-<h1 style="text-align:center;">❄️ Nord Glacial</h1>
+<a class="back" href="../">⬅ Retour au Royaume Rose</a>
 
 <div class="map-container">
 
-<img src="nord-glacial.png" class="map">
+<img src="nord-glacial.png" class="map" alt="Nord Glacial">
 
-<!-- Palais central -->
+<!-- Palais de Givre -->
 <div class="marker"
-style="top:26%;left:50%;"
+style="top:22%;left:50%;"
 onclick="showPlace('palais')">
-
 <div class="tooltip">🏰 Palais de Givre</div>
-
 </div>
 
 <!-- Forteresse -->
 <div class="marker"
-style="top:35%;left:10%;"
+style="top:33%;left:12%;"
 onclick="showPlace('forteresse')">
-
 <div class="tooltip">🏯 Forteresse du Levant</div>
-
-</div>
-
-<!-- Grotte -->
-<div class="marker"
-style="top:42%;left:86%;"
-onclick="showPlace('grotte')">
-
-<div class="tooltip">🕳️ Grotte Bleue</div>
-
 </div>
 
 <!-- Village -->
 <div class="marker"
-style="top:72%;left:54%;"
+style="top:73%;left:56%;"
 onclick="showPlace('village')">
-
 <div class="tooltip">🏘️ Village d'Hivernel</div>
-
 </div>
 
-<!-- Pont -->
+<!-- Grotte -->
 <div class="marker"
-style="top:66%;left:78%;"
-onclick="showPlace('pont')">
-
-<div class="tooltip">🌉 Pont des Cascades</div>
-
+style="top:44%;left:87%;"
+onclick="showPlace('grotte')">
+<div class="tooltip">🕳️ Grotte Bleue</div>
 </div>
 
 <!-- Forêt -->
 <div class="marker"
-style="top:58%;left:22%;"
+style="top:59%;left:20%;"
 onclick="showPlace('foret')">
-
 <div class="tooltip">🐺 Forêt des Loups Blancs</div>
+</div>
 
+<!-- Pont -->
+<div class="marker"
+style="top:70%;left:77%;"
+onclick="showPlace('pont')">
+<div class="tooltip">🌉 Pont des Cascades Gelées</div>
 </div>
 
 </div>
 
-<div id="description" class="description">
+<div id="panel">
 
-<h2>Bienvenue dans le Nord Glacial</h2>
+<button class="close-btn" onclick="closePanel()">
+Fermer
+</button>
+
+<h2>❄️ Nord Glacial</h2>
 
 <p>
 Cliquez sur un lieu de la carte pour découvrir son histoire.
-</p>
-
-<p>
-<a href="../">⬅ Retour au Royaume Rose</a>
 </p>
 
 </div>
@@ -167,72 +182,84 @@ Cliquez sur un lieu de la carte pour découvrir son histoire.
 
 function showPlace(place){
 
-const box = document.getElementById("description");
+const panel = document.getElementById("panel");
+
+panel.classList.add("open");
+
+let content = "";
 
 if(place==="palais"){
-box.innerHTML=`
+content = `
+<button class="close-btn" onclick="closePanel()">Fermer</button>
 <h2>🏰 Palais de Givre</h2>
 <p>
-Capitale du Nord Glacial. Ses tours de glace dominent les montagnes éternelles.
-Les souverains du froid y résident depuis des siècles.
+Capitale du Nord Glacial et siège du pouvoir royal.
+Ses immenses tours de glace dominent les montagnes éternelles.
+Les bannières roses du Royaume Rose flottent au-dessus des falaises gelées.
 </p>
-<p><a href="../">⬅ Retour au Royaume Rose</a></p>
 `;
 }
 
 if(place==="forteresse"){
-box.innerHTML=`
+content = `
+<button class="close-btn" onclick="closePanel()">Fermer</button>
 <h2>🏯 Forteresse du Levant</h2>
 <p>
-Ancienne place militaire protégeant les frontières occidentales.
-Ses remparts résistent aux tempêtes les plus terribles.
+Cette forteresse protège l'entrée occidentale du Nord.
+Des chevaliers de glace y surveillent les routes depuis des siècles.
 </p>
-<p><a href="../">⬅ Retour au Royaume Rose</a></p>
-`;
-}
-
-if(place==="grotte"){
-box.innerHTML=`
-<h2>🕳️ Grotte Bleue</h2>
-<p>
-Une vaste caverne illuminée par des cristaux magiques.
-Les explorateurs racontent que des créatures anciennes y demeurent.
-</p>
-<p><a href="../">⬅ Retour au Royaume Rose</a></p>
 `;
 }
 
 if(place==="village"){
-box.innerHTML=`
+content = `
+<button class="close-btn" onclick="closePanel()">Fermer</button>
 <h2>🏘️ Village d'Hivernel</h2>
 <p>
-Le plus grand village du nord.
-Les marchands y échangent fourrures, poissons et cristaux.
+Le plus grand village du Nord Glacial.
+Les artisans y travaillent le cristal de glace et les voyageurs y trouvent refuge.
 </p>
-<p><a href="../">⬅ Retour au Royaume Rose</a></p>
 `;
 }
 
-if(place==="pont"){
-box.innerHTML=`
-<h2>🌉 Pont des Cascades Gelées</h2>
+if(place==="grotte"){
+content = `
+<button class="close-btn" onclick="closePanel()">Fermer</button>
+<h2>🕳️ Grotte Bleue</h2>
 <p>
-Un immense pont de pierre enjambant les chutes gelées du royaume.
+Une immense caverne illuminée par des cristaux magiques.
+Les légendes racontent qu'un ancien dragon de givre dort dans ses profondeurs.
 </p>
-<p><a href="../">⬅ Retour au Royaume Rose</a></p>
 `;
 }
 
 if(place==="foret"){
-box.innerHTML=`
+content = `
+<button class="close-btn" onclick="closePanel()">Fermer</button>
 <h2>🐺 Forêt des Loups Blancs</h2>
 <p>
-Une forêt enneigée où vivent les célèbres loups blancs du Nord Glacial.
+Une forêt profonde où vivent les loups sacrés du Nord.
+Peu d'aventuriers osent s'aventurer sous ses arbres enneigés.
 </p>
-<p><a href="../">⬅ Retour au Royaume Rose</a></p>
 `;
 }
 
+if(place==="pont"){
+content = `
+<button class="close-btn" onclick="closePanel()">Fermer</button>
+<h2>🌉 Pont des Cascades Gelées</h2>
+<p>
+Construit au-dessus d'anciennes chutes figées par la magie.
+Il relie les terres de l'ouest au cœur du royaume.
+</p>
+`;
+}
+
+panel.innerHTML = content;
+}
+
+function closePanel(){
+document.getElementById("panel").classList.remove("open");
 }
 
 </script>
