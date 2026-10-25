@@ -268,15 +268,23 @@ Cliquez sur un lieu de la carte pour découvrir son histoire.
 function showPlace(place){
 
 const panel = document.getElementById("panel");
+const overlay = document.getElementById("overlay");
 
 panel.classList.add("open");
+overlay.classList.add("open");
 
 let content = "";
 
 if(place==="palais"){
 content = `
-<button class="close-btn" onclick="closePanel()">Fermer</button>
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div style="color:#7de8ff;letter-spacing:2px;font-size:12px;text-transform:uppercase;">
+Capitale Royale
+</div>
+
 <h2>🏰 Palais de Givre</h2>
+
 <p>
 Capitale du Nord Glacial et siège du pouvoir royal.
 Ses immenses tours de glace dominent les montagnes éternelles.
@@ -287,8 +295,14 @@ Les bannières roses du Royaume Rose flottent au-dessus des falaises gelées.
 
 if(place==="forteresse"){
 content = `
-<button class="close-btn" onclick="closePanel()">Fermer</button>
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div style="color:#7de8ff;letter-spacing:2px;font-size:12px;text-transform:uppercase;">
+Fortification Frontalière
+</div>
+
 <h2>🏯 Forteresse du Levant</h2>
+
 <p>
 Cette forteresse protège l'entrée occidentale du Nord.
 Des chevaliers de glace y surveillent les routes depuis des siècles.
@@ -298,8 +312,14 @@ Des chevaliers de glace y surveillent les routes depuis des siècles.
 
 if(place==="village"){
 content = `
-<button class="close-btn" onclick="closePanel()">Fermer</button>
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div style="color:#7de8ff;letter-spacing:2px;font-size:12px;text-transform:uppercase;">
+Centre Commercial
+</div>
+
 <h2>🏘️ Village d'Hivernel</h2>
+
 <p>
 Le plus grand village du Nord Glacial.
 Les artisans y travaillent le cristal de glace et les voyageurs y trouvent refuge.
@@ -309,8 +329,14 @@ Les artisans y travaillent le cristal de glace et les voyageurs y trouvent refug
 
 if(place==="grotte"){
 content = `
-<button class="close-btn" onclick="closePanel()">Fermer</button>
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div style="color:#7de8ff;letter-spacing:2px;font-size:12px;text-transform:uppercase;">
+Lieu Mystique
+</div>
+
 <h2>🕳️ Grotte Bleue</h2>
+
 <p>
 Une immense caverne illuminée par des cristaux magiques.
 Les légendes racontent qu'un ancien dragon de givre dort dans ses profondeurs.
@@ -320,8 +346,14 @@ Les légendes racontent qu'un ancien dragon de givre dort dans ses profondeurs.
 
 if(place==="foret"){
 content = `
-<button class="close-btn" onclick="closePanel()">Fermer</button>
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div style="color:#7de8ff;letter-spacing:2px;font-size:12px;text-transform:uppercase;">
+Terres Sauvages
+</div>
+
 <h2>🐺 Forêt des Loups Blancs</h2>
+
 <p>
 Une forêt profonde où vivent les loups sacrés du Nord.
 Peu d'aventuriers osent s'aventurer sous ses arbres enneigés.
@@ -331,8 +363,14 @@ Peu d'aventuriers osent s'aventurer sous ses arbres enneigés.
 
 if(place==="pont"){
 content = `
-<button class="close-btn" onclick="closePanel()">Fermer</button>
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div style="color:#7de8ff;letter-spacing:2px;font-size:12px;text-transform:uppercase;">
+Monument Historique
+</div>
+
 <h2>🌉 Pont des Cascades Gelées</h2>
+
 <p>
 Construit au-dessus d'anciennes chutes figées par la magie.
 Il relie les terres de l'ouest au cœur du royaume.
@@ -344,7 +382,13 @@ panel.innerHTML = content;
 }
 
 function closePanel(){
-document.getElementById("panel").classList.remove("open");
+
+document.getElementById("panel")
+.classList.remove("open");
+
+document.getElementById("overlay")
+.classList.remove("open");
+
 }
 
 </script>
