@@ -1,1 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌹 Château Rose Royal</title>
 
+<style>
+
+body{
+    margin:0;
+    background:#1a0d16;
+    font-family:Georgia, serif;
+    overflow-x:hidden;
+}
+
+.map-container{
+    position:relative;
+    max-width:1600px;
+    margin:auto;
+}
+
+.map{
+    width:100%;
+    display:block;
+}
+
+.marker{
+    position:absolute;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:#ff8fd8;
+    border:3px solid white;
+    box-shadow:0 0 20px #ff8fd8;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.marker:hover{
+    transform:scale(1.2);
+}
+
+.tooltip{
+    position:absolute;
+    bottom:45px;
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(0,0,0,.9);
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+    white-space:nowrap;
+    display:none;
+}
+
+.marker:hover .tooltip{
+    display:block;
+}
+
+.back{
+    position:fixed;
+    top:20px;
+    left:20px;
+    background:#111;
+    color:gold;
+    padding:12px 20px;
+    border-radius:10px;
+    text-decoration:none;
+    z-index:1100;
+}
+
+#overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    opacity:0;
+    visibility:hidden;
+    transition:.3s;
+    z-index:900;
+}
+
+#overlay.open{
+    opacity:1;
+    visibility:visible;
+}
+
+#panel{
+    position:fixed;
+    top:0;
+    right:-460px;
+    width:420px;
+    height:100vh;
+
+    background:rgba(30,10,24,.92);
+
+    backdrop-filter:blur(18px);
+
+    border-left:2px solid rgba(255,143,216,.4);
+
+    box-shadow:
+    -20px 0 60px rgba(0,0,0,.7),
+    inset 0 0 25px rgba(255,143,216,.15);
+
+    transition:.4s ease;
+
+    z-index:1000;
+
+    overflow-y:auto;
+
+    color:white;
+    padding:30px;
+    box-sizing:border-box;
+}
+
+#panel.open{
+    right:0;
+}
+
+.panel-title{
+    color:#ff9fe8;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    font-size:12px;
+}
+
+#panel h2{
+    color:#ffb8ef;
+    margin-top:15px;
+}
+
+#panel p{
+    line-height:1.8;
+}
+
+.close-btn{
+    position:absolute;
+    top:15px;
+    right:15px;
+
+    width:42px;
+    height:42px;
+
+    border:none;
+    border-radius:50%;
+
+    background:rgba(255,255,255,.15);
+
+    color:white;
+    cursor:pointer;
+
+    font-size:20px;
+}
+
+.close-btn:hover{
+    background:#ff9fe8;
+    color:black;
+}
+
+</style>
+</head>
+<body>
+
+<a class="back" href="../">⬅ Retour au Royaume Rose</a>
+
+<div class="map-container" onclick="closePanel()">
+
+<img src="chateau-rose.png" class="map" alt="Château Rose">
+
+<!-- Palais Royal -->
+<div class="marker"
+style="top:28%;left:51%;"
+onclick="event.stopPropagation();showPlace('palais')">
+<div class="tooltip">🏰 Palais Royal</div>
+</div>
+
+<!-- Jardin -->
+<div class="marker"
+style="top:43%;left:18%;"
+onclick="event.stopPropagation();showPlace('jardin')">
+<div class="tooltip">🌹 Jardin des Roses Éternelles</div>
+</div>
+
+<!-- Bibliothèque -->
+<div class="marker"
+style="top:18%;left:76%;"
+onclick="event.stopPropagation();showPlace('bibliotheque')">
+<div class="tooltip">📚 Grande Bibliothèque</div>
+</div>
+
+<!-- Conseil -->
+<div class="marker"
+style="top:14%;left:23%;"
+onclick="event.stopPropagation();showPlace('conseil')">
+<div class="tooltip">💎 Salle du Conseil</div>
+</div>
+
+<!-- Fontaines -->
+<div class="marker"
+style="top:57%;left:51%;"
+onclick="event.stopPropagation();showPlace('fontaine')">
+<div class="tooltip">⛲ Cour des Fontaines</div>
+</div>
+
+<!-- Porte -->
+<div class="marker"
+style="top:90%;left:50%;"
+onclick="event.stopPropagation();showPlace('porte')">
+<div class="tooltip">🚪 Porte Royale</div>
+</div>
+
+</div>
+
+<div id="overlay" onclick="closePanel()"></div>
+
+<div id="panel">
+
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div class="panel-title">
+Château Rose
+</div>
+
+<h2>🌹 Château Rose Royal</h2>
+
+<p>
+Cliquez sur un lieu pour découvrir le cœur du royaume.
+</p>
+
+</div>
+
+<script>
+
+function showPlace(place){
+
+const panel = document.getElementById("panel");
+const overlay = document.getElementById("overlay");
+
+panel.classList.add("open");
+overlay.classList.add("open");
+
+let content = "";
+
+if(place==="palais"){
+content=`
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div class="panel-title">Résidence Souveraine</div>
+
+<h2>🏰 Palais Royal</h2>
+
+<p>
+Le Palais Royal constitue le cœur du Royaume Rose.
+Les souverains y résident et les grandes décisions du royaume y sont prises.
+Ses tours dominent l'ensemble des jardins royaux.
+</p>
+`;
+}
+
+if(place==="jardin"){
+content=`
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div class="panel-title">Sanctuaire Floral</div>
+
+<h2>🌹 Jardin des Roses Éternelles</h2>
+
+<p>
+Les roses de ce jardin fleurissent toute l'année.
+Les nobles viennent s'y promener et y organiser des cérémonies.
+</p>
+`;
+}
+
+if(place==="bibliotheque"){
+content=`
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div class="panel-title">Centre du Savoir</div>
+
+<h2>📚 Grande Bibliothèque Royale</h2>
+
+<p>
+Des milliers de manuscrits et d'ouvrages rares sont conservés ici.
+Les érudits du royaume y étudient l'histoire et la magie ancienne.
+</p>
+`;
+}
+
+if(place==="conseil"){
+content=`
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div class="panel-title">Pouvoir Royal</div>
+
+<h2>💎 Salle du Conseil Doré</h2>
+
+<p>
+Les dirigeants et conseillers du Royaume Rose s'y réunissent afin de décider de l'avenir des provinces.
+</p>
+`;
+}
+
+if(place==="fontaine"){
+content=`
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div class="panel-title">Place Centrale</div>
+
+<h2>⛲ Cour des Fontaines</h2>
+
+<p>
+Les fontaines symbolisent la prospérité du royaume.
+La majorité des cérémonies publiques ont lieu dans cette immense cour.
+</p>
+`;
+}
+
+if(place==="porte"){
+content=`
+<button class="close-btn" onclick="closePanel()">✕</button>
+
+<div class="panel-title">Entrée Principale</div>
+
+<h2>🚪 Porte Royale</h2>
+
+<p>
+Immense porte fortifiée protégeant le Château Rose.
+Les bannières royales flottent au-dessus de l'entrée jour et nuit.
+</p>
+`;
+}
+
+panel.innerHTML = content;
+
+}
+
+function closePanel(){
+
+document.getElementById("panel").classList.remove("open");
+document.getElementById("overlay").classList.remove("open");
+
+}
+
+</script>
+
+</body>
+</html>
